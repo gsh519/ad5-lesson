@@ -1,0 +1,5 @@
+/mysql/data/*
+.env
+/apache/src/vendor
+.php-cs-fixer.cache
+.DS_Store

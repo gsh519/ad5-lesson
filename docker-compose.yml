@@ -1,0 +1,46 @@
+version: "3"
+services:
+  apache:
+    build:
+      context: ./apache
+    platform: linux/amd64
+    image: "lesson-web"
+    container_name: "lesson-web"
+    ports:
+      - "80:80"
+      - "443:443"
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./apache/src:/var/www:delegated
+    working_dir: /var/www
+    privileged: true
+    command: /sbin/init
+  mysql:
+    build:
+      context: ./mysql
+    platform: linux/amd64
+    image: "lesson-db"
+    container_name: "lesson-db"
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/data:/var/lib/mysql:cached
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    platform: linux/amd64
+    container_name: "lesson-pma"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=password
+      - MEMORY_LIMIT=128M
+      - UPLOAD_LIMIT=64M
+      - MAX_EXECUTION_TIME=60
+    links:
+      - mysql
+    ports:
+      - 8080:80
+    volumes:
+      - /sessions
