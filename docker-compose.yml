@@ -1,8 +1,10 @@
 version: "3"
+volumes:
+  unmount:
 services:
   apache:
     build:
-      context: ./apache
+      context: ./docker/apache
     platform: linux/amd64
     image: "lesson-web"
     container_name: "lesson-web"
@@ -12,7 +14,11 @@ services:
     tty: true
     stdin_open: true
     volumes:
-      - ./apache/src:/var/www:delegated
+      - .:/var/www:delegated
+      # 除外ディレクトリ
+      - unmount:/var/www/vendor
+      - unmount:/var/www/.github
+      - unmount:/var/www/docker
     working_dir: /var/www
     privileged: true
     command: /sbin/init

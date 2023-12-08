@@ -1,5 +1,5 @@
-/mysql/data/*
+/docker/mysql/data
 .env
-/apache/src/vendor
+vendor
 .php-cs-fixer.cache
 .DS_Store
