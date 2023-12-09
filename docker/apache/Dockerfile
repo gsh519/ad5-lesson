@@ -1,6 +1,6 @@
 FROM ubuntu
 
-RUN apt update
+RUN apt-get update && apt-get -y upgrade && apt-get -y dist-upgrade
 RUN apt -y install tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 

@@ -1,6 +1,4 @@
 version: "3"
-volumes:
-  unmount:
 services:
   apache:
     build:
@@ -15,23 +13,19 @@ services:
     stdin_open: true
     volumes:
       - .:/var/www:delegated
-      # 除外ディレクトリ
-      - unmount:/var/www/vendor
-      - unmount:/var/www/.github
-      - unmount:/var/www/docker
     working_dir: /var/www
     privileged: true
     command: /sbin/init
   mysql:
     build:
-      context: ./mysql
+      context: ./docker/mysql
     platform: linux/amd64
     image: "lesson-db"
     container_name: "lesson-db"
     ports:
       - "3306:3306"
     volumes:
-      - ./mysql/data:/var/lib/mysql:cached
+      - ./docker/mysql/data:/var/lib/mysql:cached
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     platform: linux/amd64
