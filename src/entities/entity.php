@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 abstract class Entity
 {
     public function __get(string $key): mixed

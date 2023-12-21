@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 $dsn = 'mysql:host=mysql;dbname=ad5_lesson;charset=utf8mb4';
 $user = 'root';
 $password = 'password';

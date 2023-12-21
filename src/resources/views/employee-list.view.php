@@ -24,6 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <?php /** @var array<Employee> $employees */ ?>
                     <?php foreach ($employees as $employee) : ?>
                         <tr>
                             <td><?php echo $employee->employee_name; ?></td>
