@@ -39,56 +39,52 @@ class Employee extends Entity
     public int|null $deleted_by; // 削除ユーザ
 
     /**
+     * @var array<string, string>
+     */
+    protected array $casts = [
+        'employee_id' => 'int',
+        'employee_name' => 'string',
+        'employee_name_kana' => 'string',
+        'gender' => 'int',
+        'birthday' => 'string',
+        'created_at' => 'DateTime',
+        'created_by' => 'int',
+        'updated_at' => 'DateTime',
+        'updated_by' => 'int',
+        'deleted_timestamp' => 'int',
+        'deleted_by' => 'int',
+    ];
+
+    /**
      * @param array<mixed> $data
      */
     public function __construct(array $data)
     {
-        if (array_key_exists('employee_id', $data) && is_int($data['employee_id'])) {
-            $this->employee_id = $data['employee_id'];
-        }
+        foreach ($this->casts as $key => $cast) {
+            if (!array_key_exists($key, $data)) {
+                var_dump('エラー処理');
+            }
 
-        if (array_key_exists('employee_name', $data) && is_string($data['employee_name'])) {
-            $this->employee_name = $data['employee_name'];
-        }
+            if (is_int($data[$key])) {
+                if ($cast === 'int') {
+                    $this->{$key} = $data[$key];
+                    continue;
+                }
+            }
 
-        if (array_key_exists('employee_name_kana', $data) && is_string($data['employee_name_kana'])) {
-            $this->employee_name_kana = $data['employee_name_kana'];
-        }
+            if (is_string($data[$key])) {
+                if ($cast === 'int') {
+                    $this->{$key} = (int)$data[$key];
+                    continue;
+                }
 
-        if (array_key_exists('gender', $data) && is_int($data['gender'])) {
-            $this->gender = $data['gender'];
-        } else {
-            $this->gender = null;
-        }
+                if ($cast === 'DateTime') {
+                    $this->{$key} = new DateTime($data[$key]);
+                    continue;
+                }
 
-        if (array_key_exists('birthday', $data) && is_string($data['birthday'])) {
-            $this->birthday = $data['birthday'];
-        }
-
-        if (array_key_exists('created_at', $data) && is_string($data['created_at'])) {
-            $this->created_at = new DateTime($data['created_at']);
-        }
-
-        if (array_key_exists('created_by', $data) && is_int($data['created_by'])) {
-            $this->created_by = $data['created_by'];
-        }
-
-        if (array_key_exists('updated_at', $data) && is_string($data['updated_at'])) {
-            $this->updated_at = new DateTime($data['updated_at']);
-        }
-
-        if (array_key_exists('updated_by', $data) && is_int($data['updated_by'])) {
-            $this->updated_by = $data['updated_by'];
-        }
-
-        if (array_key_exists('deleted_timestamp', $data) && is_int($data['deleted_timestamp'])) {
-            $this->deleted_timestamp = $data['deleted_timestamp'];
-        }
-
-        if (array_key_exists('deleted_by', $data) && is_int($data['deleted_by'])) {
-            $this->deleted_by = $data['deleted_by'];
-        } {
-            $this->deleted_by = null;
+                $this->{$key} = $data[$key];
+            }
         }
     }
 
