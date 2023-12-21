@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 require(__DIR__ . '/entity.php');
 
 /**
@@ -11,8 +13,9 @@ require(__DIR__ . '/entity.php');
  * @property int|null $gender
  * @property string $birthday
  * @property DateTime $created_at
- * @property int $updated_at
- * @property int $updated_bt
+ * @property int $created_by
+ * @property DateTime $updated_at
+ * @property int $updated_by
  * @property int $deleted_timestamp
  * @property int|null $deleted_by
  *
@@ -40,17 +43,53 @@ class Employee extends Entity
      */
     public function __construct(array $data)
     {
-        $this->employee_id = (int)$data['employee_id'];
-        $this->employee_name = $data['employee_name'];
-        $this->employee_name_kana = $data['employee_name_kana'];
-        $this->gender = (int)$data['gender'];
-        $this->birthday = $data['birthday'];
-        $this->created_at = new DateTime($data['created_at']);
-        $this->created_by = (int)$data['created_by'];
-        $this->updated_at = new DateTime($data['updated_at']);
-        $this->updated_by = (int)$data['updated_by'];
-        $this->deleted_timestamp = (int)$data['deleted_timestamp'];
-        $this->deleted_by = (int)$data['deleted_by'];
+        if (array_key_exists('employee_id', $data) && is_int($data['employee_id'])) {
+            $this->employee_id = $data['employee_id'];
+        }
+
+        if (array_key_exists('employee_name', $data) && is_string($data['employee_name'])) {
+            $this->employee_name = $data['employee_name'];
+        }
+
+        if (array_key_exists('employee_name_kana', $data) && is_string($data['employee_name_kana'])) {
+            $this->employee_name_kana = $data['employee_name_kana'];
+        }
+
+        if (array_key_exists('gender', $data) && is_int($data['gender'])) {
+            $this->gender = $data['gender'];
+        } else {
+            $this->gender = null;
+        }
+
+        if (array_key_exists('birthday', $data) && is_string($data['birthday'])) {
+            $this->birthday = $data['birthday'];
+        }
+
+        if (array_key_exists('created_at', $data) && is_string($data['created_at'])) {
+            $this->created_at = new DateTime($data['created_at']);
+        }
+
+        if (array_key_exists('created_by', $data) && is_int($data['created_by'])) {
+            $this->created_by = $data['created_by'];
+        }
+
+        if (array_key_exists('updated_at', $data) && is_string($data['updated_at'])) {
+            $this->updated_at = new DateTime($data['updated_at']);
+        }
+
+        if (array_key_exists('updated_by', $data) && is_int($data['updated_by'])) {
+            $this->updated_by = $data['updated_by'];
+        }
+
+        if (array_key_exists('deleted_timestamp', $data) && is_int($data['deleted_timestamp'])) {
+            $this->deleted_timestamp = $data['deleted_timestamp'];
+        }
+
+        if (array_key_exists('deleted_by', $data) && is_int($data['deleted_by'])) {
+            $this->deleted_by = $data['deleted_by'];
+        } {
+            $this->deleted_by = null;
+        }
     }
 
     /**
@@ -82,22 +121,16 @@ class Employee extends Entity
     {
         $now = date('Ymd');
         $birthday = str_replace('-', '', $this->birthday);
-        $age = floor(((int)$now - (int)$birthday) / 10000);
-
-        if ($age === false) {
-            return null;
-        }
-
-        return $age;
+        return floor(((int)$now - (int)$birthday) / 10000);
     }
 
     /**
      * 生年月日表示用
      * birthday_label
      *
-     * @return string
+     * @return string|null
      */
-    public function getBirthdayLabelAttribute(): string
+    public function getBirthdayLabelAttribute(): string|null
     {
         if (strtotime($this->birthday) === false) {
             return null;
