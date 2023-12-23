@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require(__DIR__ . '/entity.php');
+require(__DIR__ . '/../enums/gender.php');
 
 /**
  * 社員
@@ -10,7 +11,7 @@ require(__DIR__ . '/entity.php');
  * @property int $employee_id
  * @property string $employee_name
  * @property string $employee_name_kana
- * @property int|null $gender
+ * @property Gender $gender
  * @property string $birthday
  * @property DateTime $created_at
  * @property int $created_by
@@ -29,7 +30,7 @@ class Employee extends Entity
     public int $employee_id; // 社員ID
     public string $employee_name; // 氏名
     public string $employee_name_kana; // 氏名かな
-    public int|null $gender; // 性別
+    public Gender $gender; // 性別
     public string $birthday; // 生年月日
     public DateTime $created_at; // 作成日時
     public int $created_by; // 作成ユーザ
@@ -38,14 +39,11 @@ class Employee extends Entity
     public int $deleted_timestamp; // 削除日時
     public int|null $deleted_by; // 削除ユーザ
 
-    /**
-     * @var array<string, string>
-     */
     protected array $casts = [
         'employee_id' => 'int',
         'employee_name' => 'string',
         'employee_name_kana' => 'string',
-        'gender' => 'int',
+        'gender' => 'Gender',
         'birthday' => 'string',
         'created_at' => 'DateTime',
         'created_by' => 'int',
@@ -54,58 +52,6 @@ class Employee extends Entity
         'deleted_timestamp' => 'int',
         'deleted_by' => 'int',
     ];
-
-    /**
-     * @param array<mixed> $data
-     */
-    public function __construct(array $data)
-    {
-        foreach ($this->casts as $key => $cast) {
-            if (!array_key_exists($key, $data)) {
-                var_dump('エラー処理');
-            }
-
-            if (is_int($data[$key])) {
-                if ($cast === 'int') {
-                    $this->{$key} = $data[$key];
-                    continue;
-                }
-            }
-
-            if (is_string($data[$key])) {
-                if ($cast === 'int') {
-                    $this->{$key} = (int)$data[$key];
-                    continue;
-                }
-
-                if ($cast === 'DateTime') {
-                    $this->{$key} = new DateTime($data[$key]);
-                    continue;
-                }
-
-                $this->{$key} = $data[$key];
-            }
-        }
-    }
-
-    /**
-     * 性別ラベル
-     * gender_label
-     *
-     * @return string
-     */
-    public function getGenderLabelAttribute(): string
-    {
-        if ($this->gender === 1) {
-            return '男';
-        }
-
-        if ($this->gender === 2) {
-            return '女';
-        }
-
-        return '不明';
-    }
 
     /**
      * 生年月日から年齢算出
