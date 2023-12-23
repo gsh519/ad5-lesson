@@ -20,7 +20,6 @@ require(__DIR__ . '/../enums/gender.php');
  * @property int $deleted_timestamp
  * @property int|null $deleted_by
  *
- * @property-read string $gender_label
  * @property-read float|null $age
  * @property-read string $birthday_label
  *
