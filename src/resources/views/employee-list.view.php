@@ -29,7 +29,7 @@
                         <tr>
                             <td><?php echo $employee->employee_name; ?></td>
                             <td><?php echo $employee->employee_name_kana; ?></td>
-                            <td><?php echo $employee->gender_label; ?></td>
+                            <td><?php echo $employee->gender->label(); ?></td>
                             <td><?php echo $employee->age; ?></td>
                             <td><?php echo $employee->birthday_label; ?></td>
                         </tr>
