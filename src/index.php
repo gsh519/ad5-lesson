@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="ja">
+<?php
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AD5 Lesson</title>
-</head>
+declare(strict_types=1);
 
-<body>
-    <h1>Hello World</h1>
-</body>
+require(__DIR__ . '/bootstrap/init.php');
+require(__DIR__ . '/entities/employee.php');
 
-</html>
+$sql = 'select * from employees where deleted_timestamp = 0';
+/** @var \PDO $pdo */
+$stmt = $pdo->query($sql);
+if ($stmt === false) {
+    die();
+}
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$employees = array_map(fn (array $employee) => new Employee($employee), $rows);
+
+include(__DIR__ . '/resources/views/employee-list.view.php');

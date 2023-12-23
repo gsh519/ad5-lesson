@@ -1,0 +1,29 @@
+body {
+    background-color: #eee;
+}
+
+.container {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.main-title {
+    padding: 1rem;
+    background-color: #000;
+    color: #fff;
+}
+
+.main-content {
+    padding: 2rem;
+    background-color: #fff;
+}
+
+.main-content__table th {
+    padding: 0.5rem;
+    background-color: #333;
+    color: #fff;
+}
+
+.main-content__table td {
+    padding: 0.5rem;
+}
