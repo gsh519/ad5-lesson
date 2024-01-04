@@ -10,12 +10,14 @@ enum Gender: int
 
     case MAN = 1;
     case WOMAN = 2;
+    case UNKNOWN = 9;
 
     public function label(): string
     {
         return match ($this) {
             self::MAN => '男',
             self::WOMAN => '女',
+            self::UNKNOWN => '不明',
         };
     }
 }
