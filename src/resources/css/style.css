@@ -27,3 +27,42 @@ body {
 .main-content__table td {
     padding: 0.5rem;
 }
+
+/* ページネーション  */
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pagination a,
+span {
+    margin: 0 1rem;
+}
+
+.pagination>.pre-next {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    padding: 0.5rem 0;
+    color: #2B2B2B;
+}
+
+.pagination>.pre-next.link {
+    background-color: #CCCCCC;
+}
+
+.pagination>.pre-next.button {
+    background-color: #EEEEEE;
+}
+
+.pagination>.page_number {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem;
+    background-color: #CCCCCC;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2B2B2B;
+}
