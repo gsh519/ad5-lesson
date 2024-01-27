@@ -16,7 +16,7 @@ class FetchRequest extends FormRequest
      */
     protected array $fillable = [
         'name' => 'string',
-        'gender' => 'string',
+        'gender' => 'int',
         'page' => 'int',
     ];
 }
