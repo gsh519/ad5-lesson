@@ -27,3 +27,36 @@ body {
 .main-content__table td {
     padding: 0.5rem;
 }
+
+/* ページネーション  */
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.pagination > div {
+    margin-top: 0.5rem;
+}
+
+.pagination .page {
+    display: inline-block;
+    padding: 0.6rem;
+    margin: 0 0.5rem;
+}
+
+.pagination .prev-next {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+}
+
+.pagination .page.current {
+    font-weight: bold;
+}
+
+.pagination .link {
+    background-color: #CCCCCC;
+}
+
+.pagination .unlink {
+    background-color: #EEEEEE;
+}
