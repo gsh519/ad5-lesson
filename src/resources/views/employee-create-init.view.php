@@ -17,14 +17,18 @@
                     <div class="mb-5">
                         <label class="mb-2" for="employee_name">氏名<span>必須</span></label>
                         <input type="text" id="employee_name" name="employee_name" required value="<?php echo $request->employee_name; ?>">
-                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name'])) echo $error_messages['employee_name']; ?></p>
+                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name'])) {
+                            echo $error_messages['employee_name'];
+                        } ?></p>
                     </div>
 
                     <!-- かな -->
                     <div class="mb-5">
                         <label class="mb-2" for="employee_name_kana">かな<span>必須</span></label>
                         <input type="text" id="employee_name_kana" name="employee_name_kana" required value="<?php echo $request->employee_name_kana; ?>">
-                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name_kana'])) echo $error_messages['employee_name_kana']; ?></p>
+                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name_kana'])) {
+                            echo $error_messages['employee_name_kana'];
+                        } ?></p>
                     </div>
 
                     <!-- 性別 -->
@@ -37,7 +41,9 @@
                             <option value="9" <?php echo $request->gender === 9 ? 'selected' : "" ?>>不明</option>
                         </select>
 
-                        <p class="text-red mt-1"><?php if (isset($error_messages['gender'])) echo $error_messages['gender']; ?></p>
+                        <p class="text-red mt-1"><?php if (isset($error_messages['gender'])) {
+                            echo $error_messages['gender'];
+                        } ?></p>
                     </div>
 
                     <!-- 生年月日 -->

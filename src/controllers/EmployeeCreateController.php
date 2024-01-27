@@ -42,13 +42,13 @@ class EmployeeCreateController
         $create_sql = 'insert into employees (employee_name, employee_name_kana, gender, birthday, created_at, created_by, updated_at, updated_by, deleted_timestamp) values (:employee_name, :employee_name_kana, :gender, :birthday, :created_at, :created_by, :updated_at, :updated_by, :deleted_timestamp)';
 
         $now = date("Y-m-d H:i:s");
-        $birthday = new DateTime($request->birthday);
+        $birthday = $request->birthday === null ? new DateTime('') : new DateTime($request->birthday);
 
         $stmt = $this->pdo->prepare($create_sql);
         $stmt->bindValue(':employee_name', $request->employee_name);
         $stmt->bindValue(':employee_name_kana', $request->employee_name_kana);
         $stmt->bindValue(':gender', $request->gender, PDO::PARAM_INT);
-        $stmt->bindValue(':birthday', $birthday->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':birthday', $birthday);
         $stmt->bindValue(':created_at', $now);
         $stmt->bindValue(':created_by', '1');
         $stmt->bindValue(':updated_at', $now);
@@ -72,7 +72,7 @@ class EmployeeCreateController
         $error_messages = [];
 
         if (!$request->employee_name) {
-             $error_messages['employee_name'] = '氏名は必須です';
+            $error_messages['employee_name'] = '氏名は必須です';
         }
 
         if (!$request->employee_name_kana) {

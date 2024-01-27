@@ -8,7 +8,7 @@ require('./Requests/Employee/CreateRequest.php');
 
 class EmployeeCreateInitController
 {
-    public function addInit()
+    public function addInit(): void
     {
         $request = new CreateRequest([]);
         include('./resources/views/employee-create-init.view.php');
