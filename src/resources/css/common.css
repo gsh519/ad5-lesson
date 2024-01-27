@@ -1,3 +1,9 @@
+/* link */
+a {
+    color: #000;
+    text-decoration: none;
+}
+
 /* margin */
 .m-1 {
     margin: 0.25rem 0.25rem 0.25rem 0.25rem;

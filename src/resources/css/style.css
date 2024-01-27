@@ -34,35 +34,29 @@ body {
     text-align: center;
 }
 
-.pagination a,
-span {
-    margin: 0 1rem;
+.pagination > div {
+    margin-top: 0.5rem;
 }
 
-.pagination>.pre-next {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 4rem;
-    padding: 0.5rem 0;
-    color: #2B2B2B;
+.pagination .page {
+    display: inline-block;
+    padding: 0.6rem;
+    margin: 0 0.5rem;
 }
 
-.pagination>.pre-next.link {
-    background-color: #CCCCCC;
+.pagination .prev-next {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
 }
 
-.pagination>.pre-next.button {
-    background-color: #EEEEEE;
-}
-
-.pagination>.page_number {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5rem;
-    background-color: #CCCCCC;
-    font-size: 1rem;
+.pagination .page.current {
     font-weight: bold;
-    color: #2B2B2B;
+}
+
+.pagination .link {
+    background-color: #CCCCCC;
+}
+
+.pagination .unlink {
+    background-color: #EEEEEE;
 }
