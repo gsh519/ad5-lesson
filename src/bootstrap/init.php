@@ -13,3 +13,7 @@ try {
     // エラーログに記録
     exit($e->getMessage());
 }
+
+session_start();
+$flash = isset($_SESSION['flash']) ? $_SESSION['flash'] : [];
+unset($_SESSION['flash']);
