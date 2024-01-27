@@ -4,6 +4,22 @@ a {
     text-decoration: none;
 }
 
+/* text */
+.text-red {
+    color: #FF4A46;
+}
+
+.text-green {
+    color: rgb(78, 212, 78);
+}
+
+/* flex */
+.d-flex {display: flex;}
+.justify-center {justify-content: center;}
+.align-center {align-items: center;}
+.align-start {align-items: start;}
+.align-end {align-items: end;}
+
 /* margin */
 .m-1 {
     margin: 0.25rem 0.25rem 0.25rem 0.25rem;
@@ -288,7 +304,7 @@ a {
 }
 
 /* font */
-.font-weight-bold {
+.bold {
     font-weight: bold;
 }
 
@@ -299,4 +315,33 @@ a {
     border: none;
     color: #fff;
     cursor: pointer;
+}
+
+/* label */
+label {
+    display: block;
+    font-weight: bold;
+}
+
+label > span {
+    color: #FF4A46;
+    font-size: 0.75rem;
+    margin-left: 0.5rem;
+}
+
+/* input */
+input[type=text] {
+    min-width: 15rem;
+    min-height: 2rem;
+    padding: 0.25rem;
+}
+
+input[type=date] {
+    min-width: 15rem;
+    min-height: 2rem;
+    padding: 0.25rem;
+}
+
+select {
+    padding: 0.5rem;
 }
