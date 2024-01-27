@@ -6,6 +6,7 @@ require('./bootstrap/init.php');
 require('./entities/employee.php');
 require('./helpers/dump.php');
 require('./Requests/Employee/FetchRequest.php');
+require('./entities/Paginate.php');
 
 class EmployeeListController
 {
@@ -31,28 +32,33 @@ class EmployeeListController
     }
     public function show(): void
     {
-        $_GET['page'] = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         $request = new FetchRequest($_GET);
         $search_params = [];
+        $query_parameter = [];
 
         $base_sql = 'select * from employees where deleted_timestamp = 0';
-        $total_count_sql = 'select count(*) as total_count from employees where deleted_timestamp = 0';
 
         // 氏名
         if ($request->name) {
             $base_sql .= " and (employee_name like :name or employee_name_kana like :name)";
-            $total_count_sql .= " and (employee_name like :name or employee_name_kana like :name)";
             $search_params[':name'] = "%{$request->name}%";
+            $query_parameter['name'] = $request->name;
         }
 
         // 性別
         if ($request->gender) {
             $base_sql .= " and gender = :gender";
-            $total_count_sql .= " and gender = :gender";
             $search_params[':gender'] = $request->gender;
+            $query_parameter['gender'] = $request->gender;
         }
 
-        $offset = ($request->page - 1) * self::DEFAULT_PER_PAGE;
+        // 総件数
+        $stmt = $this->pdo->prepare($base_sql);
+        $stmt->execute($search_params);
+        $total_count = count($stmt->fetchAll(PDO::FETCH_ASSOC));
+
+        $offset = ($page - 1) * self::DEFAULT_PER_PAGE;
         $base_sql .= sprintf(' limit %d offset %d', self::DEFAULT_PER_PAGE, $offset);
 
         /** @var PDOStatement $stmt */
@@ -62,23 +68,8 @@ class EmployeeListController
         $employees = array_map(fn (array $employee) => new Employee($employee), $rows);
 
         // ページネーション
-        $paginate = [];
-        // 総件数
-        $stmt = $this->pdo->prepare($total_count_sql);
-        $stmt->execute($search_params);
-        /** @var int $total_count */
-        $paginate['total_count'] = $stmt->fetchColumn();
-
-        // ページ数
-        $paginate['page_count'] = (int)ceil($paginate['total_count'] / self::DEFAULT_PER_PAGE);
-
-        // from, to
-        $paginate['from'] = $offset + 1;
-        $paginate['to'] = $request->page * self::DEFAULT_PER_PAGE;
-
-        if ($paginate['to'] > $paginate['total_count']) {
-            $paginate['to'] = $paginate['total_count'];
-        }
+        $paginate = new Paginate($total_count, $page);
+        $paginate->setQueryParametor($query_parameter);
 
         include('./resources/views/employee-list.view.php');
     }
