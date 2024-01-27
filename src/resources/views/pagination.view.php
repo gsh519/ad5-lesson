@@ -1,3 +1,6 @@
+<?php
+/** @var Paginate $paginate */
+?>
 <?php if ($paginate->getTotalCount() > $paginate->getDefaultPerPage()) : ?>
     <div class="pagination">
         <p><?php echo $paginate->getTotalCount(); ?>件中 <?php echo $paginate->getFrom(); ?> - <?php echo $paginate->getTo(); ?>件目を表示</p>

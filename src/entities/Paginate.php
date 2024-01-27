@@ -37,7 +37,7 @@ class Paginate
     /**
      * クエリパラメータ
      *
-     * @var array
+     * @var array<string, mixed>
      */
     private array $query_parametor;
 
@@ -99,7 +99,7 @@ class Paginate
      * ページ総件数setter
      *
      * @param integer $total_page_number
-     * @return integer
+     * @return void
      */
     public function setTotalPageNumber(int $total_page_number): void
     {
@@ -120,7 +120,7 @@ class Paginate
      * 表示from setter
      *
      * @property int $from
-     * @return integer
+     * @return void
      */
     public function setFrom(int $from): void
     {
@@ -141,7 +141,7 @@ class Paginate
      * 表示to setter
      *
      * @property int $from
-     * @return integer
+     * @return void
      */
     public function setTo(int $to): void
     {
@@ -197,7 +197,7 @@ class Paginate
     /**
      * クエリパラメータgetter
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getQueryParametor(): array
     {
@@ -207,7 +207,7 @@ class Paginate
     /**
      * クエリパラメータsetter
      *
-     * @param array $query_parametor
+     * @param array<string, mixed> $query_parametor
      * @return void
      */
     public function setQueryParametor(array $query_parametor): void

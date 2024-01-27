@@ -1,6 +1,10 @@
 <!-- header -->
 <?php include(__DIR__ . '/header.view.php'); ?>
 
+<?php
+/** @var FetchRequest $request */
+/** @var array<Employee> $employees */ ?>
+?>
 <body>
     <div class="container">
         <h1 class="main-title">社員一覧</h1>
@@ -21,7 +25,6 @@
                     <button class="btn">検索</button>
                 </form>
             </div>
-            <?php /** @var array<Employee> $employees */ ?>
             <?php if (count($employees) > 0) : ?>
                 <table class="main-content__table">
                     <thead>
