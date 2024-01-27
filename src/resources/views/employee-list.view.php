@@ -46,35 +46,8 @@
                     </tbody>
                 </table>
 
-                <?php if ($paginate['total_count'] > self::DEFAULT_PER_PAGE) : ?>
-                    <div class="pagination">
-                        <p><?php echo $paginate['total_count']; ?>件中 <?php echo $paginate['from']; ?> - <?php echo $paginate['to']; ?>件目を表示</p>
-                        <div>
-                            <!-- 前へボタン -->
-                            <?php if ($request->page > 1) : ?>
-                                <a href="?page=<?php echo $request->page - 1 ?>">&lt;&lt;</a>
-                            <?php else : ?>
-                                <span>&lt;&lt;</span>
-                            <?php endif; ?>
-
-                            <!-- ページ番号 -->
-                            <?php for ($i = 1; $i <= $paginate['page_count']; ++$i) : ?>
-                                <?php if ($i === $request->page) : ?>
-                                    <span><?php echo $i; ?></span>
-                                <?php else : ?>
-                                    <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
-                                <?php endif; ?>
-                            <?php endfor; ?>
-
-                            <!-- 次へボタン -->
-                            <?php if ($request->page === $paginate['page_count']) : ?>
-                                <span>&gt;&gt;</span>
-                            <?php else : ?>
-                                <a href="?page=<?php echo $request->page + 1 ?>">&gt;&gt;</a>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                <!-- ページネーション -->
+                <?php include(__DIR__ . '/pagination.view.php'); ?>
             <?php else : ?>
                 <div>
                     <p>※ 該当する社員が見つかりませんでした。</p>
