@@ -1,28 +1,45 @@
+<?php
+/** @var FetchRequest $request */
+/** @var array<Employee> $employees */
+/** @var array<string ,string> $flash */
+?>
+
 <!-- header -->
 <?php include(__DIR__ . '/header.view.php'); ?>
 
-<?php
-/** @var FetchRequest $request */
-/** @var array<Employee> $employees */ ?>
-?>
 <body>
     <div class="container">
         <h1 class="main-title">社員一覧</h1>
         <div class="main-content">
+            <!-- フラッシュメッセージ表示 -->
+            <?php if (isset($flash['success'])) : ?>
+                <p class="text-green mb-2"><?php echo $flash['success']; ?></p>
+            <?php elseif (isset($flash['error'])) : ?>
+                <p class="text-red mb-2"><?php echo $flash['error']; ?></p>
+            <?php endif; ?>
             <div class="search-area mb-4">
                 <form action="" method="get">
-                    <label for="name" class="font-weight-bold">氏名</label>
-                    <input id="name" name="name" type="text" class="p-1" value="<?php echo $request->name; ?>">
+                    <div class="d-flex align-center">
+                        <div class="d-flex align-center mr-4">
+                            <label for="name" class="bold mr-2">氏名</label>
+                            <input id="name" name="name" type="text" value="<?php echo $request->name; ?>">
+                        </div>
 
-                    <label for="gender" class="font-weight-bold">性別</label>
-                    <select name="gender" id="gender" class="pr-1 pl-1 pt-2 pb-2">
-                        <option value="">全て</option>
-                        <option value="1" <?php echo $request->gender === 1 ? 'selected' : "" ?>>男</option>
-                        <option value="2" <?php echo $request->gender === 2 ? 'selected' : "" ?>>女</option>
-                        <option value="9" <?php echo $request->gender === 9 ? 'selected' : "" ?>>不明</option>
-                    </select>
+                        <div class="d-flex align-center mr-4">
+                            <label for="gender" class="bold mr-2">性別</label>
+                            <select name="gender" id="gender">
+                                <option value="">全て</option>
+                                <option value="1" <?php echo $request->gender === 1 ? 'selected' : "" ?>>男</option>
+                                <option value="2" <?php echo $request->gender === 2 ? 'selected' : "" ?>>女</option>
+                                <option value="9" <?php echo $request->gender === 9 ? 'selected' : "" ?>>不明</option>
+                            </select>
+                        </div>
 
-                    <button class="btn">検索</button>
+                        <div>
+                            <button class="btn">検索</button>
+                        </div>
+                    </div>
+
                 </form>
             </div>
             <?php if (count($employees) > 0) : ?>

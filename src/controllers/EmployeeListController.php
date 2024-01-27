@@ -59,6 +59,7 @@ class EmployeeListController
         $total_count = count($stmt->fetchAll(PDO::FETCH_ASSOC));
 
         $offset = ($page - 1) * self::DEFAULT_PER_PAGE;
+        $base_sql .= ' order by employee_id desc';
         $base_sql .= sprintf(' limit %d offset %d', self::DEFAULT_PER_PAGE, $offset);
 
         /** @var PDOStatement $stmt */
@@ -70,6 +71,8 @@ class EmployeeListController
         // ページネーション
         $paginate = new Paginate($total_count, $page);
         $paginate->setQueryParametor($query_parameter);
+
+        global $flash;
 
         include('./resources/views/employee-list.view.php');
     }
