@@ -19,8 +19,16 @@ abstract class FormRequest
     {
         foreach ($this->fillable as $key => $cast_type) {
             if (array_key_exists($key, $request_data)) {
+                if ($request_data[$key] === '') {
+                    $this->$key = null;
+                    continue;
+                }
+
                 switch ($cast_type) {
                     case 'int':
+                        $this->$key = (int)$request_data[$key];
+                        break;
+                    case 'integer':
                         $this->$key = (int)$request_data[$key];
                         break;
                     default:

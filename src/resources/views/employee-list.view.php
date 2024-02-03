@@ -1,4 +1,5 @@
 <?php
+
 /** @var FetchRequest $request */
 /** @var array<Employee> $employees */
 /** @var array<string ,string> $flash */
@@ -11,12 +12,7 @@
     <div class="container">
         <h1 class="main-title">社員一覧</h1>
         <div class="main-content">
-            <!-- フラッシュメッセージ表示 -->
-            <?php if (isset($flash['success'])) : ?>
-                <p class="text-green mb-2"><?php echo $flash['success']; ?></p>
-            <?php elseif (isset($flash['error'])) : ?>
-                <p class="text-red mb-2"><?php echo $flash['error']; ?></p>
-            <?php endif; ?>
+            <?php include(__DIR__ . '/flash-message.view.php'); ?>
             <div class="search-area mb-4">
                 <form action="" method="get">
                     <div class="d-flex align-center">
@@ -51,6 +47,7 @@
                             <th>性別</th>
                             <th>年齢</th>
                             <th>生年月日</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +58,7 @@
                                 <td><?php echo $employee->gender->label(); ?></td>
                                 <td><?php echo $employee->age; ?></td>
                                 <td><?php echo $employee->birthday_label; ?></td>
+                                <td><a href="<?php echo '/employee-edit.php?employee_id=' . $employee->employee_id; ?>" class="btn">編集</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
