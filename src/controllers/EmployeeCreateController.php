@@ -33,7 +33,8 @@ class EmployeeCreateController
     {
         $request = new CreateRequest($_POST);
 
-        if (!empty($this->validate($request))) {
+        $error_messages = $this->validate($request);
+        if (!empty($error_messages)) {
             // エラーを返す
             include('./resources/views/employee-create-init.view.php');
             return;
