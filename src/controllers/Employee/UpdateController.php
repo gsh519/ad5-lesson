@@ -31,6 +31,7 @@ class UpdateController extends BaseController
         if ($row === false) {
             $_SESSION['flash']['error'] = 'URLが間違えています。';
             header("Location:/");
+            return;
         }
 
         $employee = new Employee($row);
