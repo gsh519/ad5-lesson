@@ -5,11 +5,14 @@
 ?>
 
 <!-- header -->
-<?php include(__DIR__ . '/header.view.php'); ?>
+<?php include('header.view.php'); ?>
 
 <body>
     <div class="container">
-        <h1 class="main-title">社員登録</h1>
+        <div class="main-title d-flex align-center justify-space-between">
+            <h1>社員登録</h1>
+            <a href="/" class="outline-btn d-inline-block">戻る</a>
+        </div>
         <div class="main-content">
             <div class="search-area mb-4">
                 <form action="employee-create.php" method="post">
@@ -17,18 +20,22 @@
                     <div class="mb-5">
                         <label class="mb-2" for="employee_name">氏名<span>必須</span></label>
                         <input type="text" id="employee_name" name="employee_name" required value="<?php echo $request->employee_name; ?>">
-                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name'])) {
-                            echo $error_messages['employee_name'];
-                        } ?></p>
+                        <p class="text-red mt-1">
+                            <?php if (isset($error_messages['employee_name'])) : ?>
+                                <?php echo $error_messages['employee_name']; ?>
+                            <?php endif; ?>
+                        </p>
                     </div>
 
                     <!-- かな -->
                     <div class="mb-5">
                         <label class="mb-2" for="employee_name_kana">かな<span>必須</span></label>
                         <input type="text" id="employee_name_kana" name="employee_name_kana" required value="<?php echo $request->employee_name_kana; ?>">
-                        <p class="text-red mt-1"><?php if (isset($error_messages['employee_name_kana'])) {
-                            echo $error_messages['employee_name_kana'];
-                        } ?></p>
+                        <p class="text-red mt-1">
+                            <?php if (isset($error_messages['employee_name_kana'])) : ?>
+                                <?php echo $error_messages['employee_name_kana']; ?>
+                            <?php endif; ?>
+                        </p>
                     </div>
 
                     <!-- 性別 -->
@@ -41,9 +48,11 @@
                             <option value="9" <?php echo $request->gender === 9 ? 'selected' : "" ?>>不明</option>
                         </select>
 
-                        <p class="text-red mt-1"><?php if (isset($error_messages['gender'])) {
-                            echo $error_messages['gender'];
-                        } ?></p>
+                        <p class="text-red mt-1">
+                            <?php if (isset($error_messages['gender'])) : ?>
+                                <?php echo $error_messages['gender']; ?>
+                            <?php endif; ?>
+                        </p>
                     </div>
 
                     <!-- 生年月日 -->

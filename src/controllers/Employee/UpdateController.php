@@ -2,61 +2,45 @@
 
 declare(strict_types=1);
 
-require_once('./bootstrap/init.php');
-require_once('./helpers/dump.php');
-require_once('./Requests/Employee/UpdateRequest.php');
-require_once('./Requests/Employee/UpdateInitRequest.php');
-require_once('./entities/employee.php');
+require_once(__DIR__ . '/../BaseController.php');
+require_once(__DIR__ . '/../../Requests/Employee/UpdateRequest.php');
+require_once(__DIR__ . '/../../entities/employee.php');
 
-class UpdateController
+class UpdateController extends BaseController
 {
-    /**
-     * @var PDO
-     */
-    private $pdo;
-
-    public function __construct()
-    {
-        $dsn = 'mysql:host=mysql;dbname=ad5_lesson;charset=utf8mb4';
-        $user = 'root';
-        $password = 'password';
-
-        // PDO接続
-        try {
-            $this->pdo = new PDO($dsn, $user, $password);
-        } catch (PDOException $e) {
-            // エラーログに記録
-            exit($e->getMessage());
-        }
-    }
-
     /**
      * 社員編集画面初期表示
      *
      * @return void
      */
-    public function editInit(): void
+    public function updateInit(): void
     {
         // idから社員取得
-        $request = new UpdateInitRequest($_GET);
+        $request = new UpdateRequest($_GET);
         if ($request->employee_id === null) {
             $_SESSION['flash']['error'] = 'URLが間違えています。';
             header("Location:/");
         }
 
-        $sql = 'select * from employees where employee_id = :employee_id';
+        $sql = 'select * from employees where employee_id = :employee_id and deleted_timestamp = 0';
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindValue(':employee_id', $request->employee_id, PDO::PARAM_INT);
         $stmt->execute();
-        /** @var array<string, int|string> */
+        /** @var array<string, int|string>|false $row */
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($row === false) {
+            $_SESSION['flash']['error'] = 'URLが間違えています。';
+            header("Location:/");
+            return;
+        }
+
         $employee = new Employee($row);
 
-        include('./resources/views/employee-edit.view.php');
+        include(__DIR__ . '/../../resources/views/employee-update.view.php');
     }
 
     /**
-     * 社員編集処理
+     * 社員更新処理
      *
      * @return void
      */
@@ -68,7 +52,7 @@ class UpdateController
             $original = $_POST;
 
             // エラーを返す
-            include('./resources/views/employee-edit.view.php');
+            include('./resources/views/employee-update.view.php');
             return;
         }
 
@@ -91,7 +75,7 @@ class UpdateController
 
         $_SESSION['flash']['success'] = '社員を編集しました';
 
-        header("Location:/employee-edit.php?employee_id={$request->employee_id}");
+        header("Location:/employee-update.php?employee_id={$request->employee_id}");
     }
 
     /**

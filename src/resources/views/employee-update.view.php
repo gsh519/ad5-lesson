@@ -5,16 +5,19 @@
 ?>
 
 <!-- header -->
-<?php include(__DIR__ . '/header.view.php'); ?>
+<?php include('header.view.php'); ?>
 
 <body>
     <div class="container">
-        <h1 class="main-title">社員編集</h1>
+        <div class="main-title d-flex align-center justify-space-between">
+            <h1>社員編集</h1>
+            <a href="/" class="outline-btn d-inline-block">戻る</a>
+        </div>
         <div class="main-content">
             <!-- フラッシュメッセージ表示 -->
-            <?php include(__DIR__ . '/flash-message.view.php'); ?>
+            <?php include('flash-message.view.php'); ?>
             <div class="search-area mb-4">
-                <form action="employee-edit.php" method="post">
+                <form action="employee-update.php" method="post">
                     <input type="hidden" name="employee_id" value="<?php echo isset($original['employee_id']) ? $original['employee_id'] : $employee->employee_id; ?>">
                     <!-- 氏名 -->
                     <div class="mb-5">

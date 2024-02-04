@@ -2,33 +2,28 @@
 
 declare(strict_types=1);
 
-require('./bootstrap/init.php');
-require('./helpers/dump.php');
-require('./Requests/Employee/CreateRequest.php');
-require('./enums/gender.php');
+require_once(__DIR__ . '/../BaseController.php');
+require_once(__DIR__ . '/../../Requests/Employee/CreateRequest.php');
+require_once(__DIR__ . '/../../enums/gender.php');
 
-class EmployeeCreateController
+class CreateController extends BaseController
 {
     /**
-     * @var PDO
+     * 初期表示
+     *
+     * @return void
      */
-    private $pdo;
-
-    public function __construct()
+    public function createInit(): void
     {
-        $dsn = 'mysql:host=mysql;dbname=ad5_lesson;charset=utf8mb4';
-        $user = 'root';
-        $password = 'password';
-
-        // PDO接続
-        try {
-            $this->pdo = new PDO($dsn, $user, $password);
-        } catch (PDOException $e) {
-            // エラーログに記録
-            exit($e->getMessage());
-        }
+        $request = new CreateRequest($_GET);
+        include('./resources/views/employee-create.view.php');
     }
 
+    /**
+     * 社員登録処理
+     *
+     * @return void
+     */
     public function create(): void
     {
         $request = new CreateRequest($_POST);
@@ -36,20 +31,19 @@ class EmployeeCreateController
         $error_messages = $this->validate($request);
         if (!empty($error_messages)) {
             // エラーを返す
-            include('./resources/views/employee-create-init.view.php');
+            include('./resources/views/employee-create.view.php');
             return;
         }
 
         $create_sql = 'insert into employees (employee_name, employee_name_kana, gender, birthday, created_at, created_by, updated_at, updated_by, deleted_timestamp) values (:employee_name, :employee_name_kana, :gender, :birthday, :created_at, :created_by, :updated_at, :updated_by, :deleted_timestamp)';
 
         $now = date("Y-m-d H:i:s");
-        $birthday = $request->birthday === null ? new DateTime('') : new DateTime($request->birthday);
 
         $stmt = $this->pdo->prepare($create_sql);
         $stmt->bindValue(':employee_name', $request->employee_name);
         $stmt->bindValue(':employee_name_kana', $request->employee_name_kana);
         $stmt->bindValue(':gender', $request->gender, PDO::PARAM_INT);
-        $stmt->bindValue(':birthday', $birthday);
+        $stmt->bindValue(':birthday', $request->birthday);
         $stmt->bindValue(':created_at', $now);
         $stmt->bindValue(':created_by', '1');
         $stmt->bindValue(':updated_at', $now);

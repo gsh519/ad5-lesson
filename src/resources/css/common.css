@@ -13,9 +13,17 @@ a {
     color: rgb(78, 212, 78);
 }
 
+/* block */
+.d-block {display: block;}
+.d-inline {display: inline;}
+.d-inline-block {display: inline-block;}
+
 /* flex */
 .d-flex {display: flex;}
 .justify-center {justify-content: center;}
+.justify-start {justify-content: flex-start;}
+.justify-end {justify-content: flex-end;}
+.justify-space-between {justify-content: space-between;}
 .align-center {align-items: center;}
 .align-start {align-items: start;}
 .align-end {align-items: end;}
@@ -315,6 +323,14 @@ a {
     border: none;
     color: #fff;
     cursor: pointer;
+}
+
+.outline-btn {
+    padding: 0.5rem 0.75rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    color: #000;
 }
 
 /* label */

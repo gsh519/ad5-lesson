@@ -2,34 +2,15 @@
 
 declare(strict_types=1);
 
-require('./bootstrap/init.php');
-require('./entities/employee.php');
-require('./helpers/dump.php');
-require('./Requests/Employee/FetchRequest.php');
-require('./entities/Paginate.php');
+require_once(__DIR__ . '/../BaseController.php');
+require_once(__DIR__ . '/../../entities/employee.php');
+require_once(__DIR__ . '/../../entities/Paginate.php');
+require_once(__DIR__ . '/../../Requests/Employee/FetchRequest.php');
 
-class EmployeeListController
+class ListController extends BaseController
 {
     private const DEFAULT_PER_PAGE = 5;
-    /**
-     * @var PDO
-     */
-    private $pdo;
 
-    public function __construct()
-    {
-        $dsn = 'mysql:host=mysql;dbname=ad5_lesson;charset=utf8mb4';
-        $user = 'root';
-        $password = 'password';
-
-        // PDO接続
-        try {
-            $this->pdo = new PDO($dsn, $user, $password);
-        } catch (PDOException $e) {
-            // エラーログに記録
-            exit($e->getMessage());
-        }
-    }
     public function show(): void
     {
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;

@@ -10,7 +10,10 @@
 
 <body>
     <div class="container">
-        <h1 class="main-title">社員一覧</h1>
+        <div class="main-title d-flex align-center justify-space-between">
+            <h1>社員一覧</h1>
+            <a href="/employee-create.php" class="outline-btn d-inline-block">新規登録</a>
+        </div>
         <div class="main-content">
             <?php include(__DIR__ . '/flash-message.view.php'); ?>
             <div class="search-area mb-4">
@@ -58,7 +61,7 @@
                                 <td><?php echo $employee->gender->label(); ?></td>
                                 <td><?php echo $employee->age; ?></td>
                                 <td><?php echo $employee->birthday_label; ?></td>
-                                <td><a href="<?php echo '/employee-edit.php?employee_id=' . $employee->employee_id; ?>" class="btn">編集</a></td>
+                                <td><a href="<?php echo '/employee-update.php?employee_id=' . $employee->employee_id; ?>" class="btn">編集</a></td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>

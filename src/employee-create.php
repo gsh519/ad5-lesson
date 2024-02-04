@@ -2,7 +2,12 @@
 
 declare(strict_types=1);
 
-require(__DIR__ . '/controllers/EmployeeCreateController.php');
+require_once(__DIR__ . '/controllers/Employee/CreateController.php');
 
-$controller = new EmployeeCreateController();
-$controller->create();
+$controller = new CreateController();
+if (!empty($_POST)) {
+    $controller->create();
+    return;
+}
+
+$controller->createInit();

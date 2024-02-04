@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-require(__DIR__ . '/controllers/EmployeeListController.php');
+require(__DIR__ . '/controllers/Employee/ListController.php');
 
-$controller = new EmployeeListController();
+$controller = new ListController();
 $controller->show();

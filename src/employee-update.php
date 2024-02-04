@@ -10,4 +10,4 @@ if (!empty($_POST)) {
     return;
 }
 
-$controller->editInit();
+$controller->updateInit();
